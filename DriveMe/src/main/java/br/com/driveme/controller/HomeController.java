@@ -5,15 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.driveme.business.TipoUsuarioBusiness;
-import br.com.driveme.entity.TipoUsuario;
+import br.com.driveme.business.TipoVeiculoBusiness;
+import br.com.driveme.entity.TipoVeiculo;
 
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	TipoUsuarioBusiness tub;
+	TipoVeiculoBusiness tub;
 
 	@RequestMapping(value="/")
 	public ModelAndView hello() {
@@ -23,8 +23,8 @@ public class HomeController {
 		
 		ModelAndView ret = new ModelAndView("index");
 		
-		TipoUsuario tu = new TipoUsuario();
-		tu.setTiusDescricao("Administrador");
+		TipoVeiculo tu = new TipoVeiculo();
+		tu.setTiveDescricao("Leve");
 		tub.save(tu);
 		
 		return ret;
