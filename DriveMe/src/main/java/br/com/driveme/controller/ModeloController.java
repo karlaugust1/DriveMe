@@ -6,44 +6,46 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.driveme.business.AplicacaoBusiness;
-import br.com.driveme.entity.Aplicacao;
-
+import br.com.driveme.business.ModeloBusiness;
+import br.com.driveme.entity.Modelo;
+import br.com.driveme.entity.Montadora;
 
 @Controller
 @Transactional
-public class HomeController {
-	
-	@Autowired
-	AplicacaoBusiness tub;
+public class ModeloController {
 
-	@RequestMapping(value="/")
+	@Autowired
+	ModeloBusiness tub;
+
+	@RequestMapping(value="/modelo")
 	public ModelAndView hello() {
 		
 		
 		ModelAndView ret = new ModelAndView("index");
 		
-		Aplicacao t = new Aplicacao();
+		Modelo t = new Modelo();
 		
 		System.out.println("SAVE");
-		t.setApliDescricao("Suspensao");
+		t.setModeDescricao("Gol");
+		t.setMontadora(new Montadora(new Long(1), null));
 		tub.save(t);
 		
 		System.out.println("UPDATE");
-		System.out.println(t.getApliDescricao());
-		t.setApliDescricao("Motor");
+		System.out.println(t.getModeDescricao());
+		t.setModeDescricao("Corsa");
 		tub.update(t);
 		
 		System.out.println("FIND");
 		t = tub.findById(new Long(1));
-		System.out.println("Descricao: " + t.getApliDescricao());
+		System.out.println("Descricao: " + t.getModeDescricao());
 		
-//		System.out.println("DELETE");
-//		tub.delete(t);
+		/*System.out.println("DELETE");
+		tub.delete(t);*/
 		
 		System.out.println("========================================");
 		
 		return ret;
 		
 	}
+	
 }

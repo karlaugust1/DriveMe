@@ -6,37 +6,38 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.driveme.business.AplicacaoBusiness;
-import br.com.driveme.entity.Aplicacao;
-
+import br.com.driveme.business.UsuarioBusiness;
+import br.com.driveme.entity.TipoUsuario;
+import br.com.driveme.entity.Usuario;
 
 @Controller
 @Transactional
-public class HomeController {
+public class UsuarioController {
 	
 	@Autowired
-	AplicacaoBusiness tub;
+	UsuarioBusiness tub;
 
-	@RequestMapping(value="/")
+	@RequestMapping(value="/usuario")
 	public ModelAndView hello() {
 		
 		
 		ModelAndView ret = new ModelAndView("index");
 		
-		Aplicacao t = new Aplicacao();
+		Usuario t = new Usuario();
 		
 		System.out.println("SAVE");
-		t.setApliDescricao("Suspensao");
+		t.setUsuaNome("Karl");
+		t.setTipoUsuario(new TipoUsuario(1, null));
 		tub.save(t);
 		
 		System.out.println("UPDATE");
-		System.out.println(t.getApliDescricao());
-		t.setApliDescricao("Motor");
+		System.out.println(t.getUsuaNome());
+		t.setUsuaNome("Alisson");
 		tub.update(t);
 		
 		System.out.println("FIND");
 		t = tub.findById(new Long(1));
-		System.out.println("Descricao: " + t.getApliDescricao());
+		System.out.println("Descricao: " + t.getUsuaNome());
 		
 //		System.out.println("DELETE");
 //		tub.delete(t);

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "aplicacao", catalog = "driveme")
 public class Aplicacao implements java.io.Serializable {
 
-	private long apliId;
+	private Long apliId;
 	private String apliDescricao;
 	private Set<PecaAplicacao> pecaAplicacaos = new HashSet(0);
 
@@ -41,11 +41,11 @@ public class Aplicacao implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "apli_id", unique = true, nullable = false)
-	public long getApliId() {
+	public Long getApliId() {
 		return this.apliId;
 	}
 
-	public void setApliId(long apliId) {
+	public void setApliId(Long apliId) {
 		this.apliId = apliId;
 	}
 

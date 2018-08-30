@@ -30,8 +30,8 @@ public class GenericDao<T> implements Dao<T> {
 	}
 
 	public Long save(Object t) {
-		/*Long i = (Long) */getCurrentSession().save(t);
-		return null;
+		Long i = (Long) getCurrentSession().save(t);
+		return i;
 	}
 
 	public void delete(Object t) {
