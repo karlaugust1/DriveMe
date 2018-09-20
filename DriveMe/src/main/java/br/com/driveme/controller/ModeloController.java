@@ -27,7 +27,7 @@ public class ModeloController {
 		
 		System.out.println("SAVE");
 		t.setModeDescricao("Gol");
-		t.setMontadora(new Montadora(new Long(1), null));
+		t.setMontadora(new Montadora(new Long(1), null, null));
 		tub.save(t);
 		
 		System.out.println("UPDATE");

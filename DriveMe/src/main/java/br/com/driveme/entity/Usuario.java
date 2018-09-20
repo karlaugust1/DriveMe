@@ -1,14 +1,11 @@
 package br.com.driveme.entity;
-// Generated 22/08/2018 18:35:11 by Hibernate Tools 5.2.11.Final
-
-import static javax.persistence.GenerationType.IDENTITY;
+// Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,8 +24,9 @@ public class Usuario implements java.io.Serializable {
 	private String usuaNome;
 	private String usuaEmail;
 	private String usuaSenha;
-	private Set<UsuarioAvaliacao> usuarioAvaliacaos = new HashSet(0);
-	private Set<Pedido> pedidos = new HashSet(0);
+	private Set<PecaAvaliacao> pecaAvaliacaos = new HashSet<PecaAvaliacao>(0);
+	private Set<UsuarioAvaliacao> usuarioAvaliacaos = new HashSet<UsuarioAvaliacao>(0);
+	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Usuario() {
 	}
@@ -39,18 +37,19 @@ public class Usuario implements java.io.Serializable {
 	}
 
 	public Usuario(long usuaId, TipoUsuario tipoUsuario, String usuaNome, String usuaEmail, String usuaSenha,
-			Set<UsuarioAvaliacao> usuarioAvaliacaos, Set<Pedido> pedidos) {
+			Set<PecaAvaliacao> pecaAvaliacaos, Set<UsuarioAvaliacao> usuarioAvaliacaos, Set<Pedido> pedidos) {
 		this.usuaId = usuaId;
 		this.tipoUsuario = tipoUsuario;
 		this.usuaNome = usuaNome;
 		this.usuaEmail = usuaEmail;
 		this.usuaSenha = usuaSenha;
+		this.pecaAvaliacaos = pecaAvaliacaos;
 		this.usuarioAvaliacaos = usuarioAvaliacaos;
 		this.pedidos = pedidos;
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+
 	@Column(name = "usua_id", unique = true, nullable = false)
 	public long getUsuaId() {
 		return this.usuaId;
@@ -60,8 +59,8 @@ public class Usuario implements java.io.Serializable {
 		this.usuaId = usuaId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usua_tius_id", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "tius_id", nullable = false)
 	public TipoUsuario getTipoUsuario() {
 		return this.tipoUsuario;
 	}
@@ -97,7 +96,16 @@ public class Usuario implements java.io.Serializable {
 		this.usuaSenha = usuaSenha;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
+	public Set<PecaAvaliacao> getPecaAvaliacaos() {
+		return this.pecaAvaliacaos;
+	}
+
+	public void setPecaAvaliacaos(Set<PecaAvaliacao> pecaAvaliacaos) {
+		this.pecaAvaliacaos = pecaAvaliacaos;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
 	public Set<UsuarioAvaliacao> getUsuarioAvaliacaos() {
 		return this.usuarioAvaliacaos;
 	}
@@ -106,7 +114,7 @@ public class Usuario implements java.io.Serializable {
 		this.usuarioAvaliacaos = usuarioAvaliacaos;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
 	public Set<Pedido> getPedidos() {
 		return this.pedidos;
 	}

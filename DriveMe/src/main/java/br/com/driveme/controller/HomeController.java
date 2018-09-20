@@ -17,7 +17,7 @@ public class HomeController {
 	@Autowired
 	AplicacaoBusiness tub;
 
-	@RequestMapping(value="/")
+	@RequestMapping(value="/aplicacao")
 	public ModelAndView hello() {
 		
 		

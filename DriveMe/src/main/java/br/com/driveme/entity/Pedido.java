@@ -1,7 +1,5 @@
 package br.com.driveme.entity;
-// Generated 22/08/2018 18:35:11 by Hibernate Tools 5.2.11.Final
-
-import static javax.persistence.GenerationType.IDENTITY;
+// Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -9,7 +7,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,7 +27,7 @@ public class Pedido implements java.io.Serializable {
 	private Date pediData;
 	private Double pediSubtotal;
 	private Double pediTotal;
-	private Set<PecaPedido> pecaPedidos = new HashSet(0);
+	private Set<PecaPedido> pecaPedidos = new HashSet<PecaPedido>(0);
 
 	public Pedido() {
 	}
@@ -50,7 +47,7 @@ public class Pedido implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+
 	@Column(name = "pedi_id", unique = true, nullable = false)
 	public long getPediId() {
 		return this.pediId;
@@ -60,8 +57,8 @@ public class Pedido implements java.io.Serializable {
 		this.pediId = pediId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pedi_usua_id", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "usua_id", nullable = false)
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
@@ -98,7 +95,7 @@ public class Pedido implements java.io.Serializable {
 		this.pediTotal = pediTotal;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
 	public Set<PecaPedido> getPecaPedidos() {
 		return this.pecaPedidos;
 	}

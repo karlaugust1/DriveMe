@@ -1,12 +1,14 @@
 package br.com.driveme.entity;
-// Generated 17/08/2018 13:22:32 by Hibernate Tools 5.2.11.Final
+// Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
-import static javax.persistence.GenerationType.IDENTITY;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,18 +20,24 @@ public class TipoUsuario implements java.io.Serializable {
 
 	private long tiusId;
 	private String tiusDescricao;
+	private Set<Usuario> usuarios = new HashSet<Usuario>(0);
 
 	public TipoUsuario() {
 	}
-
 
 	public TipoUsuario(long tiusId, String tiusDescricao) {
 		this.tiusId = tiusId;
 		this.tiusDescricao = tiusDescricao;
 	}
 
+	public TipoUsuario(long tiusId, String tiusDescricao, Set<Usuario> usuarios) {
+		this.tiusId = tiusId;
+		this.tiusDescricao = tiusDescricao;
+		this.usuarios = usuarios;
+	}
+
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+
 	@Column(name = "tius_id", unique = true, nullable = false)
 	public long getTiusId() {
 		return this.tiusId;
@@ -39,13 +47,22 @@ public class TipoUsuario implements java.io.Serializable {
 		this.tiusId = tiusId;
 	}
 
-	@Column(name = "tius_descricao", nullable = false, length = 45)
+	@Column(name = "tius_descricao", nullable = false, length = 100)
 	public String getTiusDescricao() {
 		return this.tiusDescricao;
 	}
 
 	public void setTiusDescricao(String tiusDescricao) {
 		this.tiusDescricao = tiusDescricao;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tipoUsuario")
+	public Set<Usuario> getUsuarios() {
+		return this.usuarios;
+	}
+
+	public void setUsuarios(Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 }

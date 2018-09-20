@@ -1,12 +1,9 @@
 package br.com.driveme.entity;
-// Generated 22/08/2018 18:35:11 by Hibernate Tools 5.2.11.Final
-
-import static javax.persistence.GenerationType.IDENTITY;
+// Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,7 +30,7 @@ public class UsuarioAvaliacao implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+
 	@Column(name = "usav_id", unique = true, nullable = false)
 	public long getUsavId() {
 		return this.usavId;
@@ -43,8 +40,8 @@ public class UsuarioAvaliacao implements java.io.Serializable {
 		this.usavId = usavId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usav_usua_id", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "usua_id", nullable = false)
 	public Usuario getUsuario() {
 		return this.usuario;
 	}

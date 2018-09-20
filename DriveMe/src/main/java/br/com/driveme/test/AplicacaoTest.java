@@ -18,6 +18,6 @@ public class AplicacaoTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		assertEquals(true, a.getApliId() != null );
+		assertEquals(true, a.getApliDescricao() != null );
 	}
 }
