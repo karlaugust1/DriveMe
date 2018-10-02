@@ -1,12 +1,16 @@
 package br.com.driveme.entity;
 // Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,12 +31,15 @@ public class Peca implements java.io.Serializable {
 
 	private long pecaId;
 	private String pecaIdOriginal;
+	private String pecaNome;
 	private String pecaDescricao;
 	private Integer pecaVisualizacao;
 	private double pecaValor;
 	private Set<PecaImagem> pecaImagems = new HashSet<PecaImagem>(0);
 	private Set<Aplicacao> aplicacaos = new HashSet<Aplicacao>(0);
 	private Set<PecaAvaliacao> pecaAvaliacaos = new HashSet<PecaAvaliacao>(0);
+	private Set<PecaCaracteristica> pecaCaracteristicas = new HashSet<PecaCaracteristica>(0);
+	private Set<PecaEspecificacao> pecaEspecificacaos = new HashSet<PecaEspecificacao>(0);
 	private Set<Modelo> modelos = new HashSet<Modelo>(0);
 	private Set<TipoVeiculo> tipoVeiculos = new HashSet<TipoVeiculo>(0);
 	private Set<PecaPedido> pecaPedidos = new HashSet<PecaPedido>(0);
@@ -43,30 +50,34 @@ public class Peca implements java.io.Serializable {
 	public Peca() {
 	}
 
-	public Peca(long pecaId, String pecaIdOriginal, String pecaDescricao, double pecaValor) {
+	public Peca(long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, double pecaValor) {
 		this.pecaId = pecaId;
 		this.pecaIdOriginal = pecaIdOriginal;
+		this.pecaNome = pecaNome;
 		this.pecaDescricao = pecaDescricao;
 		this.pecaValor = pecaValor;
 	}
 
-	public Peca(long pecaId, String pecaIdOriginal, String pecaDescricao, Integer pecaVisualizacao, double pecaValor,
-			Set<PecaImagem> pecaImagems, Set<Aplicacao> aplicacaos, Set<PecaAvaliacao> pecaAvaliacaos, Set<Modelo> modelos, Set<TipoVeiculo> tipoVeiculos, Set<PecaPedido> pecaPedidos) {
+	public Peca(long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, Integer pecaVisualizacao, double pecaValor,
+			Set<PecaImagem> pecaImagems, Set<Aplicacao> aplicacaos, Set<PecaAvaliacao> pecaAvaliacaos, Set<PecaCaracteristica> pecaCaracteristicas, Set<PecaEspecificacao> pecaEspecificacaos, Set<Modelo> modelos, Set<TipoVeiculo> tipoVeiculos, Set<PecaPedido> pecaPedidos) {
 		this.pecaId = pecaId;
 		this.pecaIdOriginal = pecaIdOriginal;
+		this.pecaNome = pecaNome;
 		this.pecaDescricao = pecaDescricao;
 		this.pecaVisualizacao = pecaVisualizacao;
 		this.pecaValor = pecaValor;
 		this.pecaImagems = pecaImagems;
 		this.aplicacaos = aplicacaos;
 		this.pecaAvaliacaos = pecaAvaliacaos;
+		this.pecaCaracteristicas = pecaCaracteristicas;
+		this.pecaEspecificacaos = pecaEspecificacaos;
 		this.modelos = modelos;
 		this.tipoVeiculos = tipoVeiculos;
 		this.pecaPedidos = pecaPedidos;
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "peca_id", unique = true, nullable = false)
 	public long getPecaId() {
 		return this.pecaId;
@@ -85,7 +96,16 @@ public class Peca implements java.io.Serializable {
 		this.pecaIdOriginal = pecaIdOriginal;
 	}
 
-	@Column(name = "peca_descricao", nullable = false, length = 200)
+	@Column(name = "peca_nome", length = 150)
+	public String getPecaNome() {
+		return this.pecaNome;
+	}
+
+	public void setPecaNome(String pecaNome) {
+		this.pecaNome = pecaNome;
+	}
+
+	@Column(name = "peca_descricao", nullable = false)
 	public String getPecaDescricao() {
 		return this.pecaDescricao;
 	}
@@ -121,7 +141,10 @@ public class Peca implements java.io.Serializable {
 		this.pecaImagems = pecaImagems;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pecas")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "peca_aplicacao", catalog = "driveme", joinColumns = {
+			@JoinColumn(name = "peca_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "apli_id", nullable = false, updatable = false) })
 	public Set<Aplicacao> getAplicacaos() {
 		return this.aplicacaos;
 	}
@@ -138,8 +161,27 @@ public class Peca implements java.io.Serializable {
 	public void setPecaAvaliacaos(Set<PecaAvaliacao> pecaAvaliacaos) {
 		this.pecaAvaliacaos = pecaAvaliacaos;
 	}
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "peca")
+	public Set<PecaCaracteristica> getPecaCaracteristicas() {
+		return this.pecaCaracteristicas;
+	}
+
+	public void setPecaCaracteristicas(Set<PecaCaracteristica> pecaCaracteristicas) {
+		this.pecaCaracteristicas = pecaCaracteristicas;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "peca")
+	public Set<PecaEspecificacao> getPecaEspecificacaos() {
+		return this.pecaEspecificacaos;
+	}
+
+	public void setPecaEspecificacaos(Set<PecaEspecificacao> pecaEspecificacaos) {
+		this.pecaEspecificacaos = pecaEspecificacaos;
+	}
 
 	@ManyToMany(fetch = FetchType.EAGER)
+	//@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pecas")
 	@JoinTable(name = "peca_modelo", catalog = "driveme", joinColumns = {
 			@JoinColumn(name = "peca_id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "mode_id", nullable = false, updatable = false) })
@@ -151,7 +193,11 @@ public class Peca implements java.io.Serializable {
 		this.modelos = modelos;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pecas")
+	//funciona@ManyToMany(fetch = FetchType.EAGER, mappedBy = "pecas")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "peca_tipo_veiculo", catalog = "driveme", joinColumns = {
+			@JoinColumn(name = "peca_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "tive_id", nullable = false, updatable = false) })
 	public Set<TipoVeiculo> getTipoVeiculos() {
 		return this.tipoVeiculos;
 	}

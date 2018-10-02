@@ -1,9 +1,12 @@
 package br.com.driveme.entity;
 // Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,7 +40,7 @@ public class PecaPedido implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "pepe_id", unique = true, nullable = false)
 	public long getPepeId() {
 		return this.pepeId;

@@ -1,12 +1,15 @@
 package br.com.driveme.entity;
 // Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -45,7 +48,7 @@ public class Aplicacao implements java.io.Serializable {
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "apli_id", unique = true, nullable = false)
 	public long getApliId() {
 		return this.apliId;
@@ -73,10 +76,10 @@ public class Aplicacao implements java.io.Serializable {
 		this.apliIcone = apliIcone;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "peca_aplicacao", catalog = "driveme", joinColumns = {
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "aplicacaos")
+	/*@JoinTable(name = "peca_aplicacao", catalog = "driveme", joinColumns = {
 			@JoinColumn(name = "apli_id", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "peca_id", nullable = false, updatable = false) })
+					@JoinColumn(name = "peca_id", nullable = false, updatable = false) })*/
 	public Set<Peca> getPecas() {
 		return this.pecas;
 	}

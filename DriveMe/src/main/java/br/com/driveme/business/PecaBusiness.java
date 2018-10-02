@@ -21,8 +21,79 @@ public class PecaBusiness {
 	@Autowired
 	GenericDao<Peca> dao;
 	
-	public Long save(Peca p) {
-		return dao.save(p);
+	/* ODEIO O HIBERNATE */
+	@Autowired
+	PecaImagemBusiness pecaImagemBo;
+	
+	@Autowired
+	AplicacaoBusiness aplicacaoBo;
+	
+	@Autowired
+	PecaAvaliacaoBusiness pecaAvaliacaoBo;
+	
+	@Autowired
+	PecaCaracteristicaBusiness pecaCaracteristicaBo;
+	
+	@Autowired
+	PecaEspecificacaoBusiness pecaEspecificacaoBo;
+	
+	@Autowired
+	ModeloBusiness modeloBo;
+	
+	@Autowired
+	TipoVeiculoBusiness tipoVeiculoBo;
+	
+	@Autowired
+	PecaPedidoBusiness pecaPedidoBo;
+	/* FIM ODEIO O HIBERNATE */
+
+	
+	public ServiceResponse save(Peca p) {
+		
+
+		
+		p.setPecaId(dao.save(p));
+		/*
+		p.getPecaImagems().forEach( imagem -> {
+			imagem.setPeca(p);
+			pecaImagemBo.save(imagem);
+		});
+		
+		p.getAplicacaos().forEach(a -> {
+			System.out.println(a.getApliDescricao());
+			aplicacaoBo.save(a);
+		});
+		
+		p.getPecaAvaliacaos().forEach( a -> {
+			a.setPeca(p);
+			pecaAvaliacaoBo.save(a);
+		});
+		
+		p.getPecaCaracteristicas().forEach( c -> {
+			c.setPeca(p);
+			pecaCaracteristicaBo.save(c);
+		});
+		
+		p.getPecaEspecificacaos().forEach( e -> {
+			e.setPeca(p);
+			pecaEspecificacaoBo.save(e);
+		});
+		
+		p.getModelos().forEach( m -> {
+			modeloBo.save(m);
+		});
+		
+		p.getTipoVeiculos().forEach( tp -> {
+			tipoVeiculoBo.save(tp);
+		});
+		
+		p.getPecaPedidos().forEach( pp -> {
+			pecaPedidoBo.save(pp);
+		});
+		*/
+		Map<String, Object> result = new HashMap<>();
+		result.put("peca", p);
+		return new ServiceResponse(ResponseType.SUCCESS,"Peça salva com sucesso","Peça salva com sucesso",result);
 	}
 	
 	public void delete(Peca p) {

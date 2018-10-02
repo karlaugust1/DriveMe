@@ -1,6 +1,8 @@
 package br.com.driveme.business;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import br.com.driveme.dao.GenericDao;
+import br.com.driveme.entity.Aplicacao;
 import br.com.driveme.entity.TipoVeiculo;
+import br.com.driveme.util.ResponseType;
+import br.com.driveme.util.ServiceResponse;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
@@ -46,7 +51,11 @@ public class TipoVeiculoBusiness {
 		return dao.findById(id);
 	}
 	
-	public List<TipoVeiculo> list(){
-		return dao.list();
+	public ServiceResponse list(){
+		Map<String, Object> result = new HashMap<>();
+		List<TipoVeiculo> tipoVeiculos = dao.list();
+		
+		result.put("tipoveiculos", tipoVeiculos);
+		return new ServiceResponse(ResponseType.SUCCESS, "Lista de tipos de veículos obtida com sucesso", "Lista de tipos de veículos obtida com sucesso", result);
 	}
 }

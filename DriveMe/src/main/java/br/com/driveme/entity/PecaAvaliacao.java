@@ -1,9 +1,12 @@
 package br.com.driveme.entity;
 // Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +26,6 @@ public class PecaAvaliacao implements java.io.Serializable {
 	private Peca peca;
 	private Usuario usuario;
 	private int peavEstrelas;
-	private String pecaAvaliacaocol;
 	private String peavDescricao;
 
 	public PecaAvaliacao() {
@@ -36,18 +38,16 @@ public class PecaAvaliacao implements java.io.Serializable {
 		this.peavEstrelas = peavEstrelas;
 	}
 
-	public PecaAvaliacao(long peavId, Peca peca, Usuario usuario, int peavEstrelas, String pecaAvaliacaocol,
-			String peavDescricao) {
+	public PecaAvaliacao(long peavId, Peca peca, Usuario usuario, int peavEstrelas, String peavDescricao) {
 		this.peavId = peavId;
 		this.peca = peca;
 		this.usuario = usuario;
 		this.peavEstrelas = peavEstrelas;
-		this.pecaAvaliacaocol = pecaAvaliacaocol;
 		this.peavDescricao = peavDescricao;
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "peav_id", unique = true, nullable = false)
 	public long getPeavId() {
 		return this.peavId;
@@ -84,15 +84,6 @@ public class PecaAvaliacao implements java.io.Serializable {
 
 	public void setPeavEstrelas(int peavEstrelas) {
 		this.peavEstrelas = peavEstrelas;
-	}
-
-	@Column(name = "peca_avaliacaocol", length = 45)
-	public String getPecaAvaliacaocol() {
-		return this.pecaAvaliacaocol;
-	}
-
-	public void setPecaAvaliacaocol(String pecaAvaliacaocol) {
-		this.pecaAvaliacaocol = pecaAvaliacaocol;
 	}
 
 	@Column(name = "peav_descricao")

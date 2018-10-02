@@ -4,30 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.driveme.business.PecaBusiness;
-import br.com.driveme.entity.Peca;
+import br.com.driveme.business.AplicacaoBusiness;
 import br.com.driveme.util.ServiceResponse;
 
 @RestController
 @Transactional
 @CrossOrigin(origins = "*")
-public class PecaController {
+public class AplicacaoController {
 	
 	@Autowired
-	PecaBusiness business;
+	AplicacaoBusiness business;
 	
-	@GetMapping(value = {"/pecas"})
-	public ServiceResponse getPecas() {
+	@GetMapping(value = {"/aplicacoes"})
+	public ServiceResponse getAplicacaoes() {
 		return business.list();
 	}
 	
-	@PostMapping(value = {"pecas"})
-	public ServiceResponse postPeca(@RequestBody Peca peca) {
-		return business.save(peca);
-	}
+
 
 }

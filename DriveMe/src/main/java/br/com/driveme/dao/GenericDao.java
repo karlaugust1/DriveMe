@@ -1,9 +1,11 @@
 package br.com.driveme.dao;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,11 @@ public class GenericDao<T> implements Dao<T> {
 	@SuppressWarnings("unchecked")
 	public List<T> list() {
 		return getCurrentSession().createCriteria(this.entityClass).list();
+	}
+	
+	public Long getLastId() {
+		Long lastId = ((BigInteger) getCurrentSession().createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
+		return lastId;
 	}
 
 }

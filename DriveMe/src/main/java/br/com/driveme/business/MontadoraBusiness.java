@@ -1,6 +1,7 @@
 package br.com.driveme.business;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,11 @@ public class MontadoraBusiness {
 	public ServiceResponse list(){
 		
 		Map<String, Object> result = new HashMap<>();
-		result.put("montadoras", dao.list());
+		List<Montadora> montadoras = dao.list();
+		montadoras.remove(0);
+		montadoras.remove(0);
+		montadoras.remove(2);
+		result.put("montadoras", montadoras);
 		return new ServiceResponse(ResponseType.SUCCESS, "Lista de monstadoras obtida com sucesso", "Lista de monstadoras obtida com sucesso", result);
 	}
 }
