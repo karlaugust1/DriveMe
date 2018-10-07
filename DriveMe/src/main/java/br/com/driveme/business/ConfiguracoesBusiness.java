@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,8 +28,10 @@ public class ConfiguracoesBusiness {
 		MultipartFile file = arquivo.get("file");
 	    File imagem = new File(file.getOriginalFilename());
 		final String diretorio = "C:/Desenvolvimento/Workspace/code-workspace/driveme/static/pecas/";
+		Integer numero = new Random().nextInt(999);
+		String nomeImagem = numero + imagem.getName();
 		try {
-			OutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(diretorio + imagem.getName()));
+			OutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(diretorio + nomeImagem));
 			InputStream inputStream = new ByteArrayInputStream(arquivo.get("file").getBytes());
 			int token = -1;
 			while((token = inputStream.read()) != -1){
@@ -44,7 +47,8 @@ public class ConfiguracoesBusiness {
 		}
 		Map<String, Object> result = new HashMap<>();
 		PecaImagem pecaImagem = new PecaImagem();
-		pecaImagem.setPeimUrl(diretorio + imagem.getName());
+		System.out.println(nomeImagem);
+		pecaImagem.setPeimUrl("/static/pecas/" + nomeImagem);
 		result.put("imagem", pecaImagem);
 		return new ServiceResponse(ResponseType.SUCCESS, "Imagem salva com sucesso", "Imagem salva com sucesso", result);
 	}

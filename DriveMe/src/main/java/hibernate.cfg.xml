@@ -6,7 +6,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
         <property name="hibernate.connection.password">5245</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/driveme</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/drivemedev_v1</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
     </session-factory>

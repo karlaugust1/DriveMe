@@ -1,7 +1,5 @@
-package br.com.driveme.entity;
-// Generated 09/09/2018 21:13:34 by Hibernate Tools 5.2.11.Final
-
-import static javax.persistence.GenerationType.IDENTITY;
+package br.com.driveme.hibernate;
+// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -9,7 +7,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,7 +27,7 @@ public class Pedido implements java.io.Serializable {
 	private Date pediData;
 	private Double pediSubtotal;
 	private Double pediTotal;
-	private Set<PecaPedido> pecaPedidos = new HashSet<PecaPedido>(0);
+	private Set pecaPedidos = new HashSet(0);
 
 	public Pedido() {
 	}
@@ -40,7 +37,7 @@ public class Pedido implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
-	public Pedido(long pediId, Usuario usuario, Date pediData, Double pediSubtotal, Double pediTotal, Set<PecaPedido> pecaPedidos) {
+	public Pedido(long pediId, Usuario usuario, Date pediData, Double pediSubtotal, Double pediTotal, Set pecaPedidos) {
 		this.pediId = pediId;
 		this.usuario = usuario;
 		this.pediData = pediData;
@@ -50,7 +47,7 @@ public class Pedido implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+
 	@Column(name = "pedi_id", unique = true, nullable = false)
 	public long getPediId() {
 		return this.pediId;
@@ -60,7 +57,7 @@ public class Pedido implements java.io.Serializable {
 		this.pediId = pediId;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usua_id", nullable = false)
 	public Usuario getUsuario() {
 		return this.usuario;
@@ -98,12 +95,12 @@ public class Pedido implements java.io.Serializable {
 		this.pediTotal = pediTotal;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
-	public Set<PecaPedido> getPecaPedidos() {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
+	public Set getPecaPedidos() {
 		return this.pecaPedidos;
 	}
 
-	public void setPecaPedidos(Set<PecaPedido> pecaPedidos) {
+	public void setPecaPedidos(Set pecaPedidos) {
 		this.pecaPedidos = pecaPedidos;
 	}
 

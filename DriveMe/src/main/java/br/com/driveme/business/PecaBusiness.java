@@ -50,20 +50,21 @@ public class PecaBusiness {
 	
 	public ServiceResponse save(Peca p) {
 		
-
+		if(p.getPecaVisualizacao() == null)
+			p.setPecaVisualizacao(0);
 		
 		p.setPecaId(dao.save(p));
-		/*
+		
 		p.getPecaImagems().forEach( imagem -> {
 			imagem.setPeca(p);
 			pecaImagemBo.save(imagem);
 		});
-		
+		/*
 		p.getAplicacaos().forEach(a -> {
 			System.out.println(a.getApliDescricao());
 			aplicacaoBo.save(a);
 		});
-		
+		*/
 		p.getPecaAvaliacaos().forEach( a -> {
 			a.setPeca(p);
 			pecaAvaliacaoBo.save(a);
@@ -78,19 +79,19 @@ public class PecaBusiness {
 			e.setPeca(p);
 			pecaEspecificacaoBo.save(e);
 		});
-		
+		/*
 		p.getModelos().forEach( m -> {
 			modeloBo.save(m);
 		});
-		
+		*/
 		p.getTipoVeiculos().forEach( tp -> {
-			tipoVeiculoBo.save(tp);
+			System.out.println(tp.getTiveDescricao());
 		});
 		
 		p.getPecaPedidos().forEach( pp -> {
 			pecaPedidoBo.save(pp);
 		});
-		*/
+		
 		Map<String, Object> result = new HashMap<>();
 		result.put("peca", p);
 		return new ServiceResponse(ResponseType.SUCCESS,"Peça salva com sucesso","Peça salva com sucesso",result);
