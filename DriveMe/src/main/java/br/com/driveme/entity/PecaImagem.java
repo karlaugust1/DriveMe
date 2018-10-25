@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "peca_imagem", catalog = "drivemedev_v1")
-@JsonIgnoreProperties(value = {"peca", "peimId"})
+@JsonIgnoreProperties(value = {"peca"})
 public class PecaImagem implements java.io.Serializable {
 
 	private long peimId;

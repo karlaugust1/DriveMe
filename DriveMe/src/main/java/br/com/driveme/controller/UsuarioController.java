@@ -10,25 +10,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.driveme.business.PecaBusiness;
+import br.com.driveme.business.UsuarioBusiness;
 import br.com.driveme.entity.Peca;
+import br.com.driveme.entity.Usuario;
 import br.com.driveme.util.ServiceResponse;
 
 @RestController
 @Transactional
 @CrossOrigin(origins = "*")
-public class PecaController {
+public class UsuarioController {
 	
 	@Autowired
-	PecaBusiness business;
+	UsuarioBusiness business;
 	
-	@GetMapping(value = {"/pecas", "/pecas/{id}"})
-	public ServiceResponse getPecas(@PathVariable (name = "id", required = false) Long id) {
-		return business.list(id);
+	@GetMapping(value = {"/usuarios", "/usuarios/{id}"})
+	public ServiceResponse getUsuarios(@PathVariable (name = "id", required = false) Long id) {
+		return business.list();
 	}
 	
-	@PostMapping(value = {"pecas"})
-	public ServiceResponse postPeca(@RequestBody Peca peca) {
-		return business.save(peca);
+	@PostMapping(value = {"usuarios"})
+	public ServiceResponse postUsuario(@RequestBody Usuario usuario) {
+		return business.save(usuario);
+	}
+	
+	@GetMapping(value = {"/usuarios/{email}/{senha}"})
+	public ServiceResponse login(@PathVariable (name = "email", required = true) String email, @PathVariable (name = "senha", required = true) String senha) {
+		return business.login(email, senha);
 	}
 
 }

@@ -8,7 +8,12 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.driveme.entity.Usuario;
 
 public class GenericDao<T> implements Dao<T> {
 
@@ -53,6 +58,22 @@ public class GenericDao<T> implements Dao<T> {
 	public Long getLastId() {
 		Long lastId = ((BigInteger) getCurrentSession().createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
 		return lastId;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> getUsuarioByEmailAndPassword(String email, String senha) {
+		
+		Criteria cr = getCurrentSession().createCriteria(this.entityClass);
+		Criterion usuaEmail = Restrictions.eq("usuaEmail", email);
+		Criterion usuaSenha = Restrictions.eq("usuaSenha", senha);
+		LogicalExpression andExp = Restrictions.and(usuaEmail, usuaSenha);
+		
+		cr.add( andExp );
+
+		List<Usuario> results = cr.list();
+		
+		return results;
+
 	}
 
 }

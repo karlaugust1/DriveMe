@@ -75,10 +75,10 @@ public class TipoVeiculo implements java.io.Serializable {
 		this.tiveIcone = tiveIcone;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "tipoVeiculos")
-	/*@JoinTable(name = "peca_tipo_veiculo", catalog = "drivemedev_v1", joinColumns = {
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "peca_tipo_veiculo", catalog = "drivemedev_v1", joinColumns = {
 			@JoinColumn(name = "tive_id", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "peca_id", nullable = false, updatable = false) })*/
+					@JoinColumn(name = "peca_id", nullable = false, updatable = false) })
 	public Set<Peca> getPecas() {
 		return this.pecas;
 	}

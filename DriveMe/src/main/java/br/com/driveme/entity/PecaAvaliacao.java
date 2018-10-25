@@ -3,6 +3,8 @@ package br.com.driveme.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -27,6 +32,8 @@ public class PecaAvaliacao implements java.io.Serializable {
 	private Usuario usuario;
 	private int peavEstrelas;
 	private String peavDescricao;
+	private Date peavData;
+	private Long idPeca;
 
 	public PecaAvaliacao() {
 	}
@@ -94,5 +101,26 @@ public class PecaAvaliacao implements java.io.Serializable {
 	public void setPeavDescricao(String peavDescricao) {
 		this.peavDescricao = peavDescricao;
 	}
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "peav_data", length = 19)
+	public Date getPeavData() {
+		return this.peavData;
+	}
 
+	public void setPeavData(Date peavData) {
+		this.peavData = peavData;
+	}
+
+	@Transient
+	public Long getIdPeca() {
+		return idPeca;
+	}
+
+	public void setIdPeca(Long idPeca) {
+		this.idPeca = idPeca;
+	}
+
+	
+	
 }
