@@ -30,5 +30,14 @@ public class PecaController {
 	public ServiceResponse postPeca(@RequestBody Peca peca) {
 		return business.save(peca);
 	}
-
+	
+	@GetMapping(value = {"/pecas/melhores"})
+	public ServiceResponse getBestProducts() {
+		return business.listBestProducts();
+	}
+	
+	@GetMapping(value = {"/pecas/populares"})
+	public ServiceResponse getPopularParts() {
+		return business.listPopularParts();
+	}
 }

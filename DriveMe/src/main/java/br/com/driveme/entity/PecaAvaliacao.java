@@ -17,6 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -103,6 +105,7 @@ public class PecaAvaliacao implements java.io.Serializable {
 	}
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "MMyyyy")
 	@Column(name = "peav_data", length = 19)
 	public Date getPeavData() {
 		return this.peavData;

@@ -1,6 +1,7 @@
 package br.com.driveme.business;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.driveme.dao.GenericDao;
 import br.com.driveme.entity.Peca;
 import br.com.driveme.entity.PecaAvaliacao;
+import br.com.driveme.sorts.SortByPopularity;
+import br.com.driveme.sorts.SortByStars;
 import br.com.driveme.util.ResponseType;
 import br.com.driveme.util.ServiceResponse;
 
@@ -107,6 +110,41 @@ public class PecaBusiness {
 	public Peca findById(Long id) {
 		return dao.findById(id);
 	}
+	
+	public List<Peca> list(){
+		
+		try {
+			
+			List<Peca> pecas = dao.list();
+			List<Peca> pecas1 = new ArrayList<>();
+			
+			for(int i = 0; i < 100; i++) {
+				for(int j = 0; j < pecas.size(); j++) {
+					if(i == pecas.get(j).getPecaId()) {
+						pecas1.add(pecas.get(j));
+						break;						
+					}
+				}
+			}
+
+			pecas1.forEach(p -> {
+
+				String valor = String.valueOf(p.getPecaValor());
+				int tamanho = valor.length();
+				p.setValorPrincipal(valor.substring(0, tamanho - 3));
+				p.setValorCentavos(valor.substring(tamanho - 2));
+				p.setEstrelas(this.getEstrelas(p.getPecaAvaliacaos()));
+				
+			});
+			
+			return pecas1;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 
 	public ServiceResponse list(Long id) {
 
@@ -120,6 +158,7 @@ public class PecaBusiness {
 			peca.setValorPrincipal(valor.substring(0, tamanho - 3));
 			peca.setValorCentavos(valor.substring(tamanho - 2));
 			peca.setEstrelas(this.getEstrelas(peca.getPecaAvaliacaos()));
+			this.adicionarVisualizacao(peca);
 			result.put("peca", peca);
 			
 			return new ServiceResponse(ResponseType.SUCCESS, "Peca obtida com sucesso", "Peca obtida com sucesso",
@@ -147,13 +186,19 @@ public class PecaBusiness {
 				p.setValorCentavos(valor.substring(tamanho - 2));
 				p.setEstrelas(this.getEstrelas(p.getPecaAvaliacaos()));
 				
-
 			});
 
 			result.put("pecas", pecas1);
 			return new ServiceResponse(ResponseType.SUCCESS, "Lista de pecas obtida com sucesso",
 					"Lista de pecas obtida com sucesso", result);
 		}
+	}
+	
+	public void adicionarVisualizacao(Peca peca) {
+		
+		peca.setPecaVisualizacao(peca.getPecaVisualizacao() + 1);
+		this.dao.update(peca);
+		
 	}
 	
 	public Integer getEstrelas(Set<PecaAvaliacao> set) {
@@ -171,5 +216,72 @@ public class PecaBusiness {
 			estrelinha = 0;
 		}
 		return estrelinha;
+	}
+	
+	public ServiceResponse listBestProducts(){
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		List<Peca> pecas = dao.list();
+		List<Peca> pecas1 = new ArrayList<>();
+		
+		for(int i = 0; i < 100; i++) {
+			for(int j = 0; j < pecas.size(); j++) {
+				if(i == pecas.get(j).getPecaId()) {
+					pecas.get(j).setEstrelas(this.getEstrelas(pecas.get(j).getPecaAvaliacaos()));
+					pecas1.add(pecas.get(j));
+					break;						
+				}
+			}
+		}
+
+		Collections.sort(pecas1, new SortByStars()); 
+		
+		pecas = new ArrayList<Peca>();
+		for(int i = 0; i < 6; i++) {
+			String valor = String.valueOf(pecas1.get(i).getPecaValor());
+			int tamanho = valor.length();
+			pecas1.get(i).setValorPrincipal(valor.substring(0, tamanho - 3));
+			pecas1.get(i).setValorCentavos(valor.substring(tamanho - 2));
+			pecas1.get(i).setEstrelas(this.getEstrelas(pecas1.get(i).getPecaAvaliacaos()));
+			pecas.add(pecas1.get(i));
+			
+		}
+
+		result.put("pecas", pecas);
+		return new ServiceResponse(ResponseType.SUCCESS, "Lista de pecas obtida com sucesso", "Lista de pecas obtida com sucesso", result);
+	}
+	 
+	public ServiceResponse listPopularParts(){
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		List<Peca> pecas = dao.list();
+		List<Peca> pecas1 = new ArrayList<>();
+		
+		for(int i = 0; i < 100; i++) {
+			for(int j = 0; j < pecas.size(); j++) {
+				if(i == pecas.get(j).getPecaId()) {
+					pecas.get(j).setEstrelas(this.getEstrelas(pecas.get(j).getPecaAvaliacaos()));
+					pecas1.add(pecas.get(j));
+					break;						
+				}
+			}
+		}
+
+		Collections.sort(pecas1, new SortByPopularity()); 
+		pecas = new ArrayList<Peca>();
+
+		for(int i = 0; i < 6; i++) {
+			String valor = String.valueOf(pecas1.get(i).getPecaValor());
+			int tamanho = valor.length();
+			pecas1.get(i).setValorPrincipal(valor.substring(0, tamanho - 3));
+			pecas1.get(i).setValorCentavos(valor.substring(tamanho - 2));
+			pecas1.get(i).setEstrelas(this.getEstrelas(pecas1.get(i).getPecaAvaliacaos()));
+			pecas.add(pecas1.get(i));
+		}
+
+		result.put("pecas", pecas);
+		return new ServiceResponse(ResponseType.SUCCESS, "Lista de pecas obtida com sucesso", "Lista de pecas obtida com sucesso", result);
 	}
 }

@@ -1,5 +1,6 @@
 package br.com.driveme.business;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.driveme.dao.GenericDao;
+import br.com.driveme.entity.Peca;
 import br.com.driveme.entity.TipoUsuario;
 import br.com.driveme.entity.Usuario;
 import br.com.driveme.util.ResponseType;
@@ -77,7 +79,23 @@ public class UsuarioBusiness {
 	public ServiceResponse list(){
 		dao.list();
 		return new ServiceResponse(ResponseType.SUCCESS,"","",null);
-
+	}
+	
+	public List<Usuario> listAll(){
+		
+		List<Usuario> usuarios = dao.list();
+		List<Usuario> usuarios1 = new ArrayList<>();
+		
+		for(int i = 0; i < 100; i++) {
+			for(int j = 0; j < usuarios.size(); j++) {
+				if(i == usuarios.get(j).getUsuaId()) {
+					usuarios1.add(usuarios.get(j));
+					break;						
+				}
+			}
+		}
+		
+		return usuarios1;
 	}
 
 	public ServiceResponse login(String email, String senha){
