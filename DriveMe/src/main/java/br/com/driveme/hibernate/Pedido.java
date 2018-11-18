@@ -1,5 +1,5 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,38 +24,40 @@ import javax.persistence.TemporalType;
 @Table(name = "pedido", catalog = "drivemedev_v1")
 public class Pedido implements java.io.Serializable {
 
-	private long pediId;
+	private Long pediId;
 	private Usuario usuario;
 	private Date pediData;
 	private Double pediSubtotal;
 	private Double pediTotal;
+	private Byte pediAberto;
 	private Set pecaPedidos = new HashSet(0);
 
 	public Pedido() {
 	}
 
-	public Pedido(long pediId, Usuario usuario) {
-		this.pediId = pediId;
+	public Pedido(Usuario usuario) {
 		this.usuario = usuario;
 	}
 
-	public Pedido(long pediId, Usuario usuario, Date pediData, Double pediSubtotal, Double pediTotal, Set pecaPedidos) {
-		this.pediId = pediId;
+	public Pedido(Usuario usuario, Date pediData, Double pediSubtotal, Double pediTotal, Byte pediAberto,
+			Set pecaPedidos) {
 		this.usuario = usuario;
 		this.pediData = pediData;
 		this.pediSubtotal = pediSubtotal;
 		this.pediTotal = pediTotal;
+		this.pediAberto = pediAberto;
 		this.pecaPedidos = pecaPedidos;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "pedi_id", unique = true, nullable = false)
-	public long getPediId() {
+	public Long getPediId() {
 		return this.pediId;
 	}
 
-	public void setPediId(long pediId) {
+	public void setPediId(Long pediId) {
 		this.pediId = pediId;
 	}
 
@@ -93,6 +97,15 @@ public class Pedido implements java.io.Serializable {
 
 	public void setPediTotal(Double pediTotal) {
 		this.pediTotal = pediTotal;
+	}
+
+	@Column(name = "pedi_aberto")
+	public Byte getPediAberto() {
+		return this.pediAberto;
+	}
+
+	public void setPediAberto(Byte pediAberto) {
+		this.pediAberto = pediAberto;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")

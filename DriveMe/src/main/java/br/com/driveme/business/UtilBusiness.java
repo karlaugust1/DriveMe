@@ -33,6 +33,7 @@ public class UtilBusiness {
 			result.put("usuarios", usuarioBo.listAll().size());
 			result.put("funcionamento", new Random().nextInt(180));
 			result.put("compras", pedidoBo.list().size());
+			result.put("faturamento", pedidoBo.getFaturamento());
 			return new ServiceResponse(ResponseType.SUCCESS, "Sucesso obtendo informações iniciais","Sucesso obtendo informações iniciais", result);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,11 +1,13 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "usuario", catalog = "drivemedev_v1")
 public class Usuario implements java.io.Serializable {
 
-	private long usuaId;
+	private Long usuaId;
 	private TipoUsuario tipoUsuario;
 	private String usuaNome;
 	private String usuaEmail;
@@ -27,18 +29,17 @@ public class Usuario implements java.io.Serializable {
 	private Set pecaAvaliacaos = new HashSet(0);
 	private Set usuarioAvaliacaos = new HashSet(0);
 	private Set pedidos = new HashSet(0);
+	private Set wishlists = new HashSet(0);
 
 	public Usuario() {
 	}
 
-	public Usuario(long usuaId, TipoUsuario tipoUsuario) {
-		this.usuaId = usuaId;
+	public Usuario(TipoUsuario tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 
-	public Usuario(long usuaId, TipoUsuario tipoUsuario, String usuaNome, String usuaEmail, String usuaSenha,
-			Set pecaAvaliacaos, Set usuarioAvaliacaos, Set pedidos) {
-		this.usuaId = usuaId;
+	public Usuario(TipoUsuario tipoUsuario, String usuaNome, String usuaEmail, String usuaSenha, Set pecaAvaliacaos,
+			Set usuarioAvaliacaos, Set pedidos, Set wishlists) {
 		this.tipoUsuario = tipoUsuario;
 		this.usuaNome = usuaNome;
 		this.usuaEmail = usuaEmail;
@@ -46,16 +47,18 @@ public class Usuario implements java.io.Serializable {
 		this.pecaAvaliacaos = pecaAvaliacaos;
 		this.usuarioAvaliacaos = usuarioAvaliacaos;
 		this.pedidos = pedidos;
+		this.wishlists = wishlists;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "usua_id", unique = true, nullable = false)
-	public long getUsuaId() {
+	public Long getUsuaId() {
 		return this.usuaId;
 	}
 
-	public void setUsuaId(long usuaId) {
+	public void setUsuaId(Long usuaId) {
 		this.usuaId = usuaId;
 	}
 
@@ -121,6 +124,15 @@ public class Usuario implements java.io.Serializable {
 
 	public void setPedidos(Set pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	public Set getWishlists() {
+		return this.wishlists;
+	}
+
+	public void setWishlists(Set wishlists) {
+		this.wishlists = wishlists;
 	}
 
 }

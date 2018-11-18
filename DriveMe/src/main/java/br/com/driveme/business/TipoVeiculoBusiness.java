@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import br.com.driveme.dao.GenericDao;
-import br.com.driveme.entity.Aplicacao;
 import br.com.driveme.entity.TipoVeiculo;
 import br.com.driveme.util.ResponseType;
 import br.com.driveme.util.ServiceResponse;
@@ -25,18 +24,28 @@ public class TipoVeiculoBusiness {
 	@Autowired
 	GenericDao<TipoVeiculo> dao;
 	
-	public Long save(TipoVeiculo tu){
+	public ServiceResponse save(TipoVeiculo tipoVeiculo){
+				
+		Map<String, Object> result = new HashMap<>();
+		if(tipoVeiculo.getTiveDescricao() == null || tipoVeiculo.getTiveDescricao().equals("")) {
+			return new ServiceResponse(ResponseType.ERROR, "Descrição não enviada", "Descrição não enviada", result);
+		}
 		
-		System.out.println(this.getClass().getName());
-
 		try {
-			dao.save(tu);
-			System.out.println("PUTA QUE PARIU!");
+			
+			tipoVeiculo.setTiveIcone("");
+			tipoVeiculo.setTiveId(dao.save(tipoVeiculo));	
+			result.put("tipoVeiculo", tipoVeiculo);
+			return new ServiceResponse(ResponseType.SUCCESS, "Tipo veículo cadastrado com sucesso", "Tipo veículo cadastrado com sucesso", result);
+			
         } catch (JDBCException|TransactionException e) {
+        	e.printStackTrace();
         	TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-        	System.out.println(e);
-        }
-		return null;
+        	return new ServiceResponse(ResponseType.ERROR, "Erro no banco de dados", "Erro no banco de dados", result);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	return new ServiceResponse(ResponseType.ERROR, "Erro no banco de dados", "Erro no banco de dados", result);        	
+		}
 	}
 	
 	public void delete(TipoVeiculo tp) {

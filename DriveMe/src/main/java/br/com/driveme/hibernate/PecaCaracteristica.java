@@ -1,9 +1,11 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "peca_caracteristica", catalog = "drivemedev_v1")
 public class PecaCaracteristica implements java.io.Serializable {
 
-	private long pecaId;
+	private Long pecaId;
 	private Peca peca;
 	private String pecaTitulo;
 	private String pecaCaracteristica;
@@ -24,21 +26,21 @@ public class PecaCaracteristica implements java.io.Serializable {
 	public PecaCaracteristica() {
 	}
 
-	public PecaCaracteristica(long pecaId, Peca peca, String pecaTitulo, String pecaCaracteristica) {
-		this.pecaId = pecaId;
+	public PecaCaracteristica(Peca peca, String pecaTitulo, String pecaCaracteristica) {
 		this.peca = peca;
 		this.pecaTitulo = pecaTitulo;
 		this.pecaCaracteristica = pecaCaracteristica;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "peca_id", unique = true, nullable = false)
-	public long getPecaId() {
+	public Long getPecaId() {
 		return this.pecaId;
 	}
 
-	public void setPecaId(long pecaId) {
+	public void setPecaId(Long pecaId) {
 		this.pecaId = pecaId;
 	}
 

@@ -1,9 +1,11 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,27 +18,27 @@ import javax.persistence.Table;
 @Table(name = "peca_imagem", catalog = "drivemedev_v1")
 public class PecaImagem implements java.io.Serializable {
 
-	private long peimId;
+	private Long peimId;
 	private Peca peca;
 	private String peimUrl;
 
 	public PecaImagem() {
 	}
 
-	public PecaImagem(long peimId, Peca peca, String peimUrl) {
-		this.peimId = peimId;
+	public PecaImagem(Peca peca, String peimUrl) {
 		this.peca = peca;
 		this.peimUrl = peimUrl;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "peim_id", unique = true, nullable = false)
-	public long getPeimId() {
+	public Long getPeimId() {
 		return this.peimId;
 	}
 
-	public void setPeimId(long peimId) {
+	public void setPeimId(Long peimId) {
 		this.peimId = peimId;
 	}
 

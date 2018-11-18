@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.driveme.business.PecaBusiness;
 import br.com.driveme.business.UsuarioBusiness;
-import br.com.driveme.entity.Peca;
 import br.com.driveme.entity.Usuario;
 import br.com.driveme.util.ServiceResponse;
 

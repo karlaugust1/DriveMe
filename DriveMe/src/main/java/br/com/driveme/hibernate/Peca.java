@@ -1,11 +1,13 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,17 +22,18 @@ import javax.persistence.Table;
 @Table(name = "peca", catalog = "drivemedev_v1")
 public class Peca implements java.io.Serializable {
 
-	private long pecaId;
+	private Long pecaId;
 	private String pecaIdOriginal;
 	private String pecaNome;
 	private String pecaDescricao;
 	private Integer pecaVisualizacao;
 	private double pecaValor;
 	private Set pecaImagems = new HashSet(0);
+	private Set wishlists = new HashSet(0);
 	private Set aplicacaos = new HashSet(0);
 	private Set pecaAvaliacaos = new HashSet(0);
 	private Set pecaCaracteristicas = new HashSet(0);
-	private Set pecaEspecificacoeses = new HashSet(0);
+	private Set pecaEspecificacaos = new HashSet(0);
 	private Set montadoras = new HashSet(0);
 	private Set modelos = new HashSet(0);
 	private Set tipoVeiculos = new HashSet(0);
@@ -39,28 +42,28 @@ public class Peca implements java.io.Serializable {
 	public Peca() {
 	}
 
-	public Peca(long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, double pecaValor) {
-		this.pecaId = pecaId;
+	public Peca(String pecaIdOriginal, String pecaNome, String pecaDescricao, double pecaValor) {
 		this.pecaIdOriginal = pecaIdOriginal;
 		this.pecaNome = pecaNome;
 		this.pecaDescricao = pecaDescricao;
 		this.pecaValor = pecaValor;
 	}
 
-	public Peca(long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, Integer pecaVisualizacao,
-			double pecaValor, Set pecaImagems, Set aplicacaos, Set pecaAvaliacaos, Set pecaCaracteristicas,
-			Set pecaEspecificacoeses, Set montadoras, Set modelos, Set tipoVeiculos, Set pecaPedidos) {
-		this.pecaId = pecaId;
+	public Peca(String pecaIdOriginal, String pecaNome, String pecaDescricao, Integer pecaVisualizacao,
+			double pecaValor, Set pecaImagems, Set wishlists, Set aplicacaos, Set pecaAvaliacaos,
+			Set pecaCaracteristicas, Set pecaEspecificacaos, Set montadoras, Set modelos, Set tipoVeiculos,
+			Set pecaPedidos) {
 		this.pecaIdOriginal = pecaIdOriginal;
 		this.pecaNome = pecaNome;
 		this.pecaDescricao = pecaDescricao;
 		this.pecaVisualizacao = pecaVisualizacao;
 		this.pecaValor = pecaValor;
 		this.pecaImagems = pecaImagems;
+		this.wishlists = wishlists;
 		this.aplicacaos = aplicacaos;
 		this.pecaAvaliacaos = pecaAvaliacaos;
 		this.pecaCaracteristicas = pecaCaracteristicas;
-		this.pecaEspecificacoeses = pecaEspecificacoeses;
+		this.pecaEspecificacaos = pecaEspecificacaos;
 		this.montadoras = montadoras;
 		this.modelos = modelos;
 		this.tipoVeiculos = tipoVeiculos;
@@ -68,13 +71,14 @@ public class Peca implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "peca_id", unique = true, nullable = false)
-	public long getPecaId() {
+	public Long getPecaId() {
 		return this.pecaId;
 	}
 
-	public void setPecaId(long pecaId) {
+	public void setPecaId(Long pecaId) {
 		this.pecaId = pecaId;
 	}
 
@@ -132,6 +136,15 @@ public class Peca implements java.io.Serializable {
 		this.pecaImagems = pecaImagems;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "peca")
+	public Set getWishlists() {
+		return this.wishlists;
+	}
+
+	public void setWishlists(Set wishlists) {
+		this.wishlists = wishlists;
+	}
+
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "pecas")
 	public Set getAplicacaos() {
 		return this.aplicacaos;
@@ -160,12 +173,12 @@ public class Peca implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "peca")
-	public Set getPecaEspecificacoeses() {
-		return this.pecaEspecificacoeses;
+	public Set getPecaEspecificacaos() {
+		return this.pecaEspecificacaos;
 	}
 
-	public void setPecaEspecificacoeses(Set pecaEspecificacoeses) {
-		this.pecaEspecificacoeses = pecaEspecificacoeses;
+	public void setPecaEspecificacaos(Set pecaEspecificacaos) {
+		this.pecaEspecificacaos = pecaEspecificacaos;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)

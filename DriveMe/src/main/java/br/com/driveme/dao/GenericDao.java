@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.SimpleExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.driveme.entity.Usuario;
@@ -58,6 +59,17 @@ public class GenericDao<T> implements Dao<T> {
 	public Long getLastId() {
 		Long lastId = ((BigInteger) getCurrentSession().createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).longValue();
 		return lastId;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> listById(String campo, Long id){
+		
+		Criteria cr = getCurrentSession().createCriteria(this.entityClass);
+		//Criterion atributo = Restrictions.eq(campo, id);
+		SimpleExpression andExp = Restrictions.eq(campo, id);
+		
+		cr.add( andExp );
+		return cr.list();
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -1,9 +1,11 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,27 +18,27 @@ import javax.persistence.Table;
 @Table(name = "usuario_avaliacao", catalog = "drivemedev_v1")
 public class UsuarioAvaliacao implements java.io.Serializable {
 
-	private long usavId;
+	private Long usavId;
 	private Usuario usuario;
 	private int usavEstrelas;
 
 	public UsuarioAvaliacao() {
 	}
 
-	public UsuarioAvaliacao(long usavId, Usuario usuario, int usavEstrelas) {
-		this.usavId = usavId;
+	public UsuarioAvaliacao(Usuario usuario, int usavEstrelas) {
 		this.usuario = usuario;
 		this.usavEstrelas = usavEstrelas;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "usav_id", unique = true, nullable = false)
-	public long getUsavId() {
+	public Long getUsavId() {
 		return this.usavId;
 	}
 
-	public void setUsavId(long usavId) {
+	public void setUsavId(Long usavId) {
 		this.usavId = usavId;
 	}
 

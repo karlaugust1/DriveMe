@@ -19,10 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "peca_pedido", catalog = "drivemedev_v1")
-@JsonIgnoreProperties(value = "peca")
+@JsonIgnoreProperties(value = {"peca", "pedido"})
 public class PecaPedido implements java.io.Serializable {
 
-	private long pepeId;
+	private Long pepeId;
 	private Peca peca;
 	private Pedido pedido;
 	private int pepeQuantidade;
@@ -31,7 +31,7 @@ public class PecaPedido implements java.io.Serializable {
 	public PecaPedido() {
 	}
 
-	public PecaPedido(long pepeId, Peca peca, Pedido pedido, int pepeQuantidade, double pepeSubtotal) {
+	public PecaPedido(Long pepeId, Peca peca, Pedido pedido, int pepeQuantidade, double pepeSubtotal) {
 		this.pepeId = pepeId;
 		this.peca = peca;
 		this.pedido = pedido;
@@ -42,11 +42,11 @@ public class PecaPedido implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "pepe_id", unique = true, nullable = false)
-	public long getPepeId() {
+	public Long getPepeId() {
 		return this.pepeId;
 	}
 
-	public void setPepeId(long pepeId) {
+	public void setPepeId(Long pepeId) {
 		this.pepeId = pepeId;
 	}
 

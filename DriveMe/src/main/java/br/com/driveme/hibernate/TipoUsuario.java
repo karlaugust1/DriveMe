@@ -1,11 +1,13 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,32 +19,31 @@ import javax.persistence.Table;
 @Table(name = "tipo_usuario", catalog = "drivemedev_v1")
 public class TipoUsuario implements java.io.Serializable {
 
-	private long tiusId;
+	private Long tiusId;
 	private String tiusDescricao;
 	private Set usuarios = new HashSet(0);
 
 	public TipoUsuario() {
 	}
 
-	public TipoUsuario(long tiusId, String tiusDescricao) {
-		this.tiusId = tiusId;
+	public TipoUsuario(String tiusDescricao) {
 		this.tiusDescricao = tiusDescricao;
 	}
 
-	public TipoUsuario(long tiusId, String tiusDescricao, Set usuarios) {
-		this.tiusId = tiusId;
+	public TipoUsuario(String tiusDescricao, Set usuarios) {
 		this.tiusDescricao = tiusDescricao;
 		this.usuarios = usuarios;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "tius_id", unique = true, nullable = false)
-	public long getTiusId() {
+	public Long getTiusId() {
 		return this.tiusId;
 	}
 
-	public void setTiusId(long tiusId) {
+	public void setTiusId(Long tiusId) {
 		this.tiusId = tiusId;
 	}
 

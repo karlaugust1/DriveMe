@@ -1,9 +1,11 @@
 package br.com.driveme.hibernate;
-// Generated 05/10/2018 12:48:45 by Hibernate Tools 5.2.11.Final
+// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "peca_pedido", catalog = "drivemedev_v1")
 public class PecaPedido implements java.io.Serializable {
 
-	private long pepeId;
+	private Long pepeId;
 	private Peca peca;
 	private Pedido pedido;
 	private int pepeQuantidade;
@@ -25,8 +27,7 @@ public class PecaPedido implements java.io.Serializable {
 	public PecaPedido() {
 	}
 
-	public PecaPedido(long pepeId, Peca peca, Pedido pedido, int pepeQuantidade, double pepeSubtotal) {
-		this.pepeId = pepeId;
+	public PecaPedido(Peca peca, Pedido pedido, int pepeQuantidade, double pepeSubtotal) {
 		this.peca = peca;
 		this.pedido = pedido;
 		this.pepeQuantidade = pepeQuantidade;
@@ -34,13 +35,14 @@ public class PecaPedido implements java.io.Serializable {
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "pepe_id", unique = true, nullable = false)
-	public long getPepeId() {
+	public Long getPepeId() {
 		return this.pepeId;
 	}
 
-	public void setPepeId(long pepeId) {
+	public void setPepeId(Long pepeId) {
 		this.pepeId = pepeId;
 	}
 

@@ -3,6 +3,7 @@ package br.com.driveme.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,24 +26,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = {"pecas", "montadora"})
 public class Modelo implements java.io.Serializable {
 
-	private long modeId;
+	private Long modeId;
 	private Montadora montadora;
 	private String modeDescricao;
-	private int modeAno;
+	private Integer modeAno;
 	private String modeIcone;
 	private Set<Peca> pecas = new HashSet<Peca>(0);
 
 	public Modelo() {
 	}
 
-	public Modelo(long modeId, String modeDescricao, int modeAno, String modeIcone) {
+	public Modelo(Long modeId, String modeDescricao, Integer modeAno, String modeIcone) {
 		this.modeId = modeId;
 		this.modeDescricao = modeDescricao;
 		this.modeAno = modeAno;
 		this.modeIcone = modeIcone;
 	}
 
-	public Modelo(long modeId, String modeDescricao, int modeAno, String modeIcone, Set<Peca> pecas) {
+	public Modelo(Long modeId, String modeDescricao, Integer modeAno, String modeIcone, Set<Peca> pecas) {
 		this.modeId = modeId;
 		this.modeDescricao = modeDescricao;
 		this.modeAno = modeAno;
@@ -53,11 +54,11 @@ public class Modelo implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "mode_id", unique = true, nullable = false)
-	public long getModeId() {
+	public Long getModeId() {
 		return this.modeId;
 	}
 
-	public void setModeId(long modeId) {
+	public void setModeId(Long modeId) {
 		this.modeId = modeId;
 	}
 
@@ -71,11 +72,11 @@ public class Modelo implements java.io.Serializable {
 	}
 
 	@Column(name = "mode_ano", nullable = false)
-	public int getModeAno() {
+	public Integer getModeAno() {
 		return this.modeAno;
 	}
 
-	public void setModeAno(int modeAno) {
+	public void setModeAno(Integer modeAno) {
 		this.modeAno = modeAno;
 	}
 
