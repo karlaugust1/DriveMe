@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "montadora", catalog = "drivemedev_v1")
-@JsonIgnoreProperties(value = {"modelos", "pecas"})
+@JsonIgnoreProperties(value = {"modelos", "pecas", "hibernateLazyInitializer", "handler"})
 public class Montadora implements java.io.Serializable {
 
 	private long montId;

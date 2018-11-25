@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -22,10 +24,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "usuario", catalog = "drivemedev_v1")
-@JsonIgnoreProperties(value = "pecaAvaliacaos")
+@JsonIgnoreProperties(value = {"pecaAvaliacaos", "wishlists"})
+@Proxy(lazy = false)
 public class Usuario implements java.io.Serializable {
 
-	private long usuaId;
+	private Long usuaId;
 	private TipoUsuario tipoUsuario;
 	private String usuaNome;
 	private String usuaEmail;
@@ -33,17 +36,19 @@ public class Usuario implements java.io.Serializable {
 	private Set<PecaAvaliacao> pecaAvaliacaos = new HashSet<PecaAvaliacao>(0);
 	private Set<UsuarioAvaliacao> usuarioAvaliacaos = new HashSet<UsuarioAvaliacao>(0);
 	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
+	private Set<Wishlist> wishlists = new HashSet<Wishlist>(0);
+
 
 	public Usuario() {
 	}
 
-	public Usuario(long usuaId, TipoUsuario tipoUsuario) {
+	public Usuario(Long usuaId, TipoUsuario tipoUsuario) {
 		this.usuaId = usuaId;
 		this.tipoUsuario = tipoUsuario;
 	}
 
-	public Usuario(long usuaId, TipoUsuario tipoUsuario, String usuaNome, String usuaEmail, String usuaSenha,
-			Set<PecaAvaliacao> pecaAvaliacaos, Set<UsuarioAvaliacao> usuarioAvaliacaos, Set<Pedido> pedidos) {
+	public Usuario(Long usuaId, TipoUsuario tipoUsuario, String usuaNome, String usuaEmail, String usuaSenha,
+			Set<PecaAvaliacao> pecaAvaliacaos, Set<UsuarioAvaliacao> usuarioAvaliacaos, Set<Pedido> pedidos, Set<Wishlist> wishlists) {
 		this.usuaId = usuaId;
 		this.tipoUsuario = tipoUsuario;
 		this.usuaNome = usuaNome;
@@ -52,16 +57,17 @@ public class Usuario implements java.io.Serializable {
 		this.pecaAvaliacaos = pecaAvaliacaos;
 		this.usuarioAvaliacaos = usuarioAvaliacaos;
 		this.pedidos = pedidos;
+		this.wishlists = wishlists;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "usua_id", unique = true, nullable = false)
-	public long getUsuaId() {
+	public Long getUsuaId() {
 		return this.usuaId;
 	}
 
-	public void setUsuaId(long usuaId) {
+	public void setUsuaId(Long usuaId) {
 		this.usuaId = usuaId;
 	}
 
@@ -127,6 +133,15 @@ public class Usuario implements java.io.Serializable {
 
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
+	public Set<Wishlist> getWishlists() {
+		return this.wishlists;
+	}
+
+	public void setWishlists(Set<Wishlist> wishlists) {
+		this.wishlists = wishlists;
 	}
 
 }

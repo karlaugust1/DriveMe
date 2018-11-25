@@ -29,9 +29,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "peca", catalog = "drivemedev_v1")
 @Proxy(lazy = false)
+@JsonIgnoreProperties(value = {"wishlists", "hibernateLazyInitializer", "handler"})
 public class Peca implements java.io.Serializable {
 
-	private long pecaId;
+	private Long pecaId;
 	private String pecaIdOriginal;
 	private String pecaNome;
 	private String pecaDescricao;
@@ -46,6 +47,7 @@ public class Peca implements java.io.Serializable {
 	private Set<Modelo> modelos = new HashSet<Modelo>(0);
 	private Set<TipoVeiculo> tipoVeiculos = new HashSet<TipoVeiculo>(0);
 	private Set<PecaPedido> pecaPedidos = new HashSet<PecaPedido>(0);
+	private Set<Wishlist> wishlists = new HashSet<Wishlist>(0);
 	
 	private String valorPrincipal;
 	private String valorCentavos;
@@ -54,7 +56,7 @@ public class Peca implements java.io.Serializable {
 	public Peca() {
 	}
 
-	public Peca(long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, double pecaValor) {
+	public Peca(Long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, double pecaValor) {
 		this.pecaId = pecaId;
 		this.pecaIdOriginal = pecaIdOriginal;
 		this.pecaNome = pecaNome;
@@ -62,8 +64,8 @@ public class Peca implements java.io.Serializable {
 		this.pecaValor = pecaValor;
 	}
 
-	public Peca(long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, Integer pecaVisualizacao, double pecaValor,
-			Set<PecaImagem> pecaImagems, Set<Aplicacao> aplicacaos, Set<PecaAvaliacao> pecaAvaliacaos, Set<PecaCaracteristica> pecaCaracteristicas, Set<PecaEspecificacao> pecaEspecificacaos, Set<Montadora> montadoras, Set<Modelo> modelos, Set<TipoVeiculo> tipoVeiculos, Set<PecaPedido> pecaPedidos) {
+	public Peca(Long pecaId, String pecaIdOriginal, String pecaNome, String pecaDescricao, Integer pecaVisualizacao, double pecaValor,
+			Set<PecaImagem> pecaImagems, Set<Aplicacao> aplicacaos, Set<PecaAvaliacao> pecaAvaliacaos, Set<PecaCaracteristica> pecaCaracteristicas, Set<PecaEspecificacao> pecaEspecificacaos, Set<Montadora> montadoras, Set<Modelo> modelos, Set<TipoVeiculo> tipoVeiculos, Set<PecaPedido> pecaPedidos,  Set<Wishlist> wishlists) {
 		this.pecaId = pecaId;
 		this.pecaIdOriginal = pecaIdOriginal;
 		this.pecaNome = pecaNome;
@@ -79,16 +81,17 @@ public class Peca implements java.io.Serializable {
 		this.modelos = modelos;
 		this.tipoVeiculos = tipoVeiculos;
 		this.pecaPedidos = pecaPedidos;
+		this.wishlists = wishlists;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "peca_id", unique = true, nullable = false)
-	public long getPecaId() {
+	public Long getPecaId() {
 		return this.pecaId;
 	}
 
-	public void setPecaId(long pecaId) {
+	public void setPecaId(Long pecaId) {
 		this.pecaId = pecaId;
 	}
 
@@ -257,7 +260,14 @@ public class Peca implements java.io.Serializable {
 		this.estrelas = estrelas;
 	}
 	
-	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "peca")
+	public Set<Wishlist> getWishlists() {
+		return this.wishlists;
+	}
+
+	public void setWishlists(Set<Wishlist> wishlists) {
+		this.wishlists = wishlists;
+	}
 
 }
 	

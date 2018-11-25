@@ -1,5 +1,5 @@
 package br.com.driveme.hibernate;
-// Generated 17/11/2018 23:52:37 by Hibernate Tools 5.2.11.Final
+// Generated 18/11/2018 00:04:27 by Hibernate Tools 5.2.11.Final
 
 import java.util.HashSet;
 import java.util.Set;

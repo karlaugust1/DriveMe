@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.driveme.dao.GenericDao;
+import br.com.driveme.dao.UsuarioDaoImpl;
 import br.com.driveme.entity.Peca;
 import br.com.driveme.entity.PecaAvaliacao;
 import br.com.driveme.entity.Usuario;
@@ -24,6 +25,9 @@ public class PecaAvaliacaoBusiness {
 	@Autowired
 	GenericDao<PecaAvaliacao> dao;
 	
+	@Autowired
+	UsuarioDaoImpl usuarioDao;
+	
 	public ServiceResponse save(PecaAvaliacao pa) {
 		Map<String, Object> result = new HashMap<>();
 		
@@ -34,7 +38,7 @@ public class PecaAvaliacaoBusiness {
 		pa.setPeavData(new Date());
 		pa.setPeavId(dao.save(pa));
 		Usuario usuario = new Usuario();
-		usuario = pa.getUsuario();
+		usuario = usuarioDao.findById(pa.getUsuario().getUsuaId());
 		pa = dao.findById(pa.getPeavId());
 		pa.setUsuario(usuario);
 		result.put("avaliacao", pa);

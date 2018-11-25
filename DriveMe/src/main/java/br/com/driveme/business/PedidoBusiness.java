@@ -167,7 +167,7 @@ public class PedidoBusiness {
 		for(int i = 0; i < 100; i++) {
 			for(int j = 0; j < pedidos.size(); j++) {
 				if(i == pedidos.get(j).getPediId()) {
-					faturamento += pedidos.get(i).getPediTotal();
+					faturamento += pedidos.get(j).getPediTotal();
 					break;						
 				}
 			}
@@ -199,6 +199,8 @@ public class PedidoBusiness {
 
 	public ServiceResponse findFinalizadosByUsuarioId(Long idUsuario) {
 		
+		System.out.println("entrou nesse método escroto");
+		
 		Map<String, Object> result = new HashMap<>();
 		
 		try {			
@@ -216,10 +218,21 @@ public class PedidoBusiness {
 				}				
 			}
 			
+			List<Pedido> pedidosFinalizados2 = new ArrayList<>();
+			
+			for(int i = 0; i < 100; i++) {
+				for(int j = 0; j < pedidosFinalizados.size(); j++) {
+					if(i == pedidosFinalizados.get(j).getPediId()) {
+						pedidosFinalizados2.add(pedidosFinalizados.get(j));
+						break;						
+					}
+				}
+			}
+			
 			List<List<Peca>> listaPecasPedido = new ArrayList<>();
 			List<Peca> pecas = pecaBusiness.list();
 			
-			for(Pedido pedido : pedidosFinalizados) {
+			for(Pedido pedido : pedidosFinalizados2) {
 				
 				List<PecaPedido> lista = new ArrayList<>();
 				lista.addAll(pedido.getPecaPedidos());
@@ -239,7 +252,7 @@ public class PedidoBusiness {
 			}
 			
 			result.put("pecas", listaPecasPedido);
-			result.put("pedidos", pedidosFinalizados);
+			result.put("pedidos", pedidosFinalizados2);
 			return new ServiceResponse(ResponseType.SUCCESS, "Pedidos obtidos com sucesso", "Pedidos obtidos com sucesso", result);
 			
 		} catch (Exception e) {

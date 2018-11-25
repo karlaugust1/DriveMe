@@ -78,7 +78,7 @@ public class PecaBusiness {
 			c.setPeca(p);
 			pecaCaracteristicaBo.save(c);
 		});
-
+		
 		p.getPecaEspecificacaos().forEach(e -> {
 			e.setPeca(p);
 			pecaEspecificacaoBo.save(e);
@@ -131,8 +131,14 @@ public class PecaBusiness {
 
 				String valor = String.valueOf(p.getPecaValor());
 				int tamanho = valor.length();
-				p.setValorPrincipal(valor.substring(0, tamanho - 3));
-				p.setValorCentavos(valor.substring(tamanho - 2));
+				String centavos = valor.substring(valor.indexOf(".") + 1);
+				String principal = valor.substring(0, valor.indexOf("."));
+				if(centavos.length() == 1) {
+					p.setValorCentavos(centavos.concat("0"));
+				}else {
+					p.setValorCentavos(valor.substring(tamanho - 2));					
+				}
+				p.setValorPrincipal(principal);
 				p.setEstrelas(this.getEstrelas(p.getPecaAvaliacaos()));
 				
 			});
@@ -143,7 +149,7 @@ public class PecaBusiness {
 			e.printStackTrace();
 			return null;
 		}
-		
+			
 	}
 
 	public ServiceResponse list(Long id) {
@@ -155,8 +161,14 @@ public class PecaBusiness {
 
 			String valor = String.valueOf(peca.getPecaValor());
 			int tamanho = valor.length();
-			peca.setValorPrincipal(valor.substring(0, tamanho - 3));
-			peca.setValorCentavos(valor.substring(tamanho - 2));
+			String centavos = valor.substring(valor.indexOf(".") + 1);
+			String principal = valor.substring(0, valor.indexOf("."));
+			if(centavos.length() == 1) {
+				peca.setValorCentavos(centavos.concat("0"));
+			}else {
+				peca.setValorCentavos(valor.substring(tamanho - 2));					
+			}
+			peca.setValorPrincipal(principal);
 			peca.setEstrelas(this.getEstrelas(peca.getPecaAvaliacaos()));
 			this.adicionarVisualizacao(peca);
 			result.put("peca", peca);
@@ -182,8 +194,14 @@ public class PecaBusiness {
 
 				String valor = String.valueOf(p.getPecaValor());
 				int tamanho = valor.length();
-				p.setValorPrincipal(valor.substring(0, tamanho - 3));
-				p.setValorCentavos(valor.substring(tamanho - 2));
+				String centavos = valor.substring(valor.indexOf(".") + 1);
+				String principal = valor.substring(0, valor.indexOf("."));
+				if(centavos.length() == 1) {
+					p.setValorCentavos(centavos.concat("0"));
+				}else {
+					p.setValorCentavos(valor.substring(tamanho - 2));					
+				}
+				p.setValorPrincipal(principal);
 				p.setEstrelas(this.getEstrelas(p.getPecaAvaliacaos()));
 				
 			});
@@ -238,14 +256,21 @@ public class PecaBusiness {
 		Collections.sort(pecas1, new SortByStars()); 
 		
 		pecas = new ArrayList<Peca>();
-		for(int i = 0; i < 6; i++) {
-			String valor = String.valueOf(pecas1.get(i).getPecaValor());
-			int tamanho = valor.length();
-			pecas1.get(i).setValorPrincipal(valor.substring(0, tamanho - 3));
-			pecas1.get(i).setValorCentavos(valor.substring(tamanho - 2));
-			pecas1.get(i).setEstrelas(this.getEstrelas(pecas1.get(i).getPecaAvaliacaos()));
-			pecas.add(pecas1.get(i));
-			
+		for(int i = 0; i < pecas1.size(); i++) {
+			if(i < 6) {
+				String valor = String.valueOf(pecas1.get(i).getPecaValor());
+				int tamanho = valor.length();
+				String centavos = valor.substring(valor.indexOf(".") + 1);
+				String principal = valor.substring(0, valor.indexOf("."));
+				if(centavos.length() == 1) {
+					pecas1.get(i).setValorCentavos(centavos.concat("0"));
+				}else {
+					pecas1.get(i).setValorCentavos(valor.substring(tamanho - 2));					
+				}
+				pecas1.get(i).setValorPrincipal(principal);
+				pecas1.get(i).setEstrelas(this.getEstrelas(pecas1.get(i).getPecaAvaliacaos()));
+				pecas.add(pecas1.get(i));				
+			}
 		}
 
 		result.put("pecas", pecas);
@@ -272,13 +297,22 @@ public class PecaBusiness {
 		Collections.sort(pecas1, new SortByPopularity()); 
 		pecas = new ArrayList<Peca>();
 
-		for(int i = 0; i < 6; i++) {
-			String valor = String.valueOf(pecas1.get(i).getPecaValor());
-			int tamanho = valor.length();
-			pecas1.get(i).setValorPrincipal(valor.substring(0, tamanho - 3));
-			pecas1.get(i).setValorCentavos(valor.substring(tamanho - 2));
-			pecas1.get(i).setEstrelas(this.getEstrelas(pecas1.get(i).getPecaAvaliacaos()));
-			pecas.add(pecas1.get(i));
+		for(int i = 0; i < pecas1.size(); i++) {
+			if(i <6) {
+				String valor = String.valueOf(pecas1.get(i).getPecaValor());
+				int tamanho = valor.length();
+				String centavos = valor.substring(valor.indexOf(".") + 1);
+				String principal = valor.substring(0, valor.indexOf("."));
+				if(centavos.length() == 1) {
+					pecas1.get(i).setValorCentavos(centavos.concat("0"));
+				}else {
+					pecas1.get(i).setValorCentavos(valor.substring(tamanho - 2));					
+				}
+				pecas1.get(i).setValorPrincipal(principal);
+				pecas1.get(i).setEstrelas(this.getEstrelas(pecas1.get(i).getPecaAvaliacaos()));
+				pecas.add(pecas1.get(i));
+				
+			}
 		}
 
 		result.put("pecas", pecas);
