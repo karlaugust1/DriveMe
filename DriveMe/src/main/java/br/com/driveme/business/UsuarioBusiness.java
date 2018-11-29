@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.driveme.dao.GenericDao;
+import br.com.driveme.entity.JavaMail;
 import br.com.driveme.entity.Peca;
 import br.com.driveme.entity.TipoUsuario;
 import br.com.driveme.entity.Usuario;
@@ -55,6 +56,8 @@ public class UsuarioBusiness {
 					}
 				}
 			}
+			
+			new JavaMail().enviarEmail(usuario.getUsuaEmail());
 			result.put("usuario", usuario);
 			return new ServiceResponse(ResponseType.SUCCESS, "Usuário cadastrado com sucesso", "Usuário cadastrado com sucesso", result);
 		} catch (Exception e) {
